@@ -1,420 +1,112 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8">
-  <title>CodeVerse</title>
-  <style>
-    /* ✅ تصميم داكن احترافي */
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #0f0f0f;
-      direction: rtl;
-      text-align: right;
-      padding: 20px;
-      overflow-x: hidden;
-      overflow-y: auto;
-      color: white;
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #00ff99;
-      margin-bottom: 30px;
-    }
-
-    /* ✅ خلفية أكواد متحركة */
-    .code-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .code-line {
-      position: absolute;
-      color: #00ff99;
-      font-family: monospace;
-      font-size: 16px;
-      animation: floatDown 10s linear infinite;
-      white-space: nowrap;
-      opacity: 0.3;
-    }
-
-    @keyframes floatDown {
-      0% { top: -100px; opacity: 0; }
-      50% { opacity: 1; }
-      100% { top: 100%; opacity: 0; }
-    }
-
-    /* ✅ بوت ترحيبي برسالة متحركة */
-    .welcome-bot {
-      background-color: #00ff99;
-      color: #0f0f0f;
-      padding: 15px;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: bold;
-      animation: fadeIn 2s ease-in-out;
-      margin-bottom: 30px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ✅ مجسم ترحيبي متحرك */
-    .greeter {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      margin-bottom: 40px;
-      animation: fadeIn 2s ease-in-out;
-    }
-
-    .face {
-      position: relative;
-      width: 120px;
-      height: 120px;
-      background-color: #00ff99;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      animation: bounce 2s infinite;
-    }
-
-    .eye {
-      position: absolute;
-      width: 15px;
-      height: 15px;
-      background-color: #0f0f0f;
-      border-radius: 50%;
-      top: 35px;
-    }
-
-    .eye.left { left: 25px; }
-    .eye.right { right: 25px; }
-
-    .mouth {
-      position: absolute;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 40px;
-      height: 10px;
-      background-color: #0f0f0f;
-      border-radius: 5px;
-    }
-
-    .hand {
-      position: absolute;
-      top: 10px;
-      right: -30px;
-      width: 30px;
-      height: 10px;
-      background-color: #00ff99;
-      border-radius: 5px;
-      transform-origin: left center;
-      animation: wave 1.5s infinite;
-    }
-
-    .greeting-text {
-      font-size: 18px;
-      color: #00ff99;
-      font-weight: bold;
-    }
-
-    @keyframes wave {
-      0% { transform: rotate(0deg); }
-      50% { transform: rotate(30deg); }
-      100% { transform: rotate(0deg); }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    /* ✅ كورسات تفاعلية */
-    .course {
-      background-color: rgba(255, 255, 255, 0.1);
-      border: 1px solid #00ff99;
-      padding: 15px;
-      margin-bottom: 40px;
-      border-radius: 8px;
-      backdrop-filter: blur(5px);
-    }
-
-    .course h2 {
-      margin-top: 0;
-      color: #00ff99;
-    }
-
-    .price {
-      font-weight: bold;
-      color: #00e6b8;
-    }
-
-    .buy-btn {
-      background-color: #00ff99;
-      color: #0f0f0f;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .buy-btn:hover {
-      background-color: #00cc77;
-    }
-
-    .course img {
-      width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-top: 15px;
-    }
-
-    /* ✅ معرض صور مبرمجين بتأثيرات */
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 40px;
-    }
-
-    .gallery img {
-      width: 300px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
-      border: 2px solid #00ff99;
-      transition: 0.3s ease;
-    }
-
-    .gallery img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #00ff99;
-    }
-
-    /* ✅ زر تمرير ذكي */
-    .scroll-btn {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .scroll-btn button {
-      background-color: #00ff99;
-      color: #0f0f0f;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .scroll-btn button:hover {
-      background-color: #00cc77;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- خلفية الأكواد -->
-  <div class="code-bg">
-    <div class="code-line" style="left: 5%;">while(true){console.log("💻")}</div>
-    <div class="code-line" style="left: 25%;">if(user){buyCourse()}</div>
-    <div class="code-line" style="left: 45%;">function start(){return "🔥"}</div>
-    <div class="code-line" style="left: 65%;">let i = 0; i++;</div>
-    <div class="code-line" style="left: 85%;">💡💡💡💡💡</div>
-  </div>
-
-  <!-- بوت ترحيبي -->
-  <div class="welcome-bot">أهلاً بك في CodeVerse! 👋 استعد لتجربة تعليمية تفاعلية لا تُنسى.</div>
-
-  <!-- مجسم ترحيبي متحرك -->
-  <div class="greeter">
-    <div class="face">
-      <div class="eye left"></div>
-      <div class="eye right"></div>
-      <div class="mouth"></div>
-      <div class="hand"></div>
-    </div>
-    <div class="greeting-text">مرحباً بك أيها المبرمج! 👨‍💻</div>
-  </div>
-
-  <!-- عنوان الموقع -->
-  <h1>منصة CodeVerse للكورسات التفاعلية</h1>
-
-  <!-- زر تمرير -->
-  <div class="scroll-btn">
-    <button onclick="scrollToGallery()">مشاهدة صور المبرمجين 👨‍💻</button>
-  </div>
-
-  <!-- كورسات -->
-  <div class="course">
-    <h2>كورس برمجة بلغة Python</h2>
-    <p class="price">السعر:   <!-- ✅ كورسات تفاعلية مع زر شراء وصور -->
-  <div class="course">
-    <h2>كورس برمجة بلغة Python</h2>
-    <p class="price">السعر: 199 درهم</p>
-    <button class="buy-btn" onclick="buyCourse('Python')">اشترِ الآن</button>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Course">
-  </div>
-
-  <div class="course">
-    <h2>كورس تصميم مواقع HTML/CSS</h2>
-    <p class="price">السعر: 149 درهم</p>
-    <button class="buy-btn" onclick="buyCourse('Web Design')">اشترِ الآن</button>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="Web Design Course">
-  </div>
-
-  <div class="course">
-    <h2>كورس JavaScript التفاعلي</h2>
-    <p class="price">السعر: 179 درهم</p>
-    <button class="buy-btn" onclick="buyCourse('JavaScript')">اشترِ الآن</button>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="JavaScript Course">
-  </div>
-  <!-- كورسات إضافية -->
-  <div class="course">
-    <h2>كورس تطوير تطبيقات الهاتف</h2>
-    <p class="price">السعر: 249 درهم</p>
-    <button class="buy-btn" onclick="buyCourse('Mobile Development')">اشترِ الآن</button>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Android_robot.svg" alt="Mobile Development Course">
-  </div>
-
-  <div class="course">
-    <h2>كورس الذكاء الاصطناعي</h2>
-    <p class="price">السعر: 299 درهم</p>
-    <button class="buy-btn" onclick="buyCourse('AI')">اشترِ الآن</button>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Artificial_Intelligence_logo.svg" alt="AI Course">
-  </div>
-
- 
-  <h2>تحدث مع CodeVerse Bot 🤖</h2>
-<div style="background-color:#1a1a1a; padding:15px; border-radius:10px; max-width:600px; margin:auto;">
-  <div id="chatBox" style="height:200px; overflow-y:auto; background:#000; padding:10px; border-radius:8px; color:#00ff99; font-family:monospace;"></div>
-  <input type="text" id="userInput" placeholder="اكتب سؤالك هنا..." style="width:100%; padding:10px; margin-top:10px; border-radius:5px; border:none;">
-  <button onclick="talkToBot()" style="margin-top:10px; background-color:#00ff99; color:#0f0f0f; padding:10px; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">إرسال</button>
-</div>
-<!-- سكربت التفاعل -->
-<script>
-  function talkToBot() {
-    const input = document.getElementById("userInput").value.trim();
-    const chatBox = document.getElementById("chatBox");
-
-    if (input === "") return;
-
-    chatBox.innerHTML += `<div><strong>أنت:</strong> ${input}</div>`;
-
-    let response = "أنا مجرد بوت بسيط! جرب تسألني عن الكورسات أو تقول مرحباً.";
-
-    if (input.includes("مرحبا") || input.includes("أهلاً")) {
-      response = "أهلاً بك في CodeVerse! كيف أقدر أساعدك اليوم؟";
-    } else if (input.includes("كورس") || input.includes("تعلم")) {
-      response = "لدينا كورسات Python، تصميم مواقع، وذكاء اصطناعي. أي واحد يهمك؟";
-    } else if (input.includes("شكرا") || input.includes("شكرًا")) {
-      response = "على الرحب والسعة! 😊";
-    }
-
-    chatBox.innerHTML += `<div><strong>CodeVerse Bot:</strong> ${response}</div>`;
-    document.getElementById("userInput").value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-</script>
-
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Translations</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
-<div class="rating">
-  <label>قيّم هذا الكورس:</label>
-  <span onclick="rateCourse(1)">⭐</span>
-  <span onclick="rateCourse(2)">⭐</span>
-  <span onclick="rateCourse(3)">⭐</span>
-  <span onclick="rateCourse(4)">⭐</span>
-  <span onclick="rateCourse(5)">⭐</span>
-</div>
-<div style="position:fixed; top:0; width:100%; background:#0f0f0f; padding:10px; z-index:1000; text-align:center;">
-  <a href="#courses" style="color:#00ff99; margin:0 15px;">📚 الكورسات</a>
-  <a href="#gallery" style="color:#00ff99; margin:0 15px;">🖼 المعرض</a>
-  <a href="#chatbot" style="color:#00ff99; margin:0 15px;">🤖 البوت</a>
-</div>
-<audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3"></audio>
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import "./index.css";
 
-<button onclick="toggleAssistant()" style="position:fixed; bottom:20px; right:20px; background:#00ff99; color:#0f0f0f; padding:10px 15px; border:none; border-radius:50px; font-weight:bold; cursor:pointer; z-index:1000;">🧠 مساعد</button>
+const root = document.getElementById("root");
 
-<div id="assistantPanel" style="position:fixed; bottom:80px; right:20px; width:300px; background:#1a1a1a; color:#00ff99; padding:15px; border-radius:10px; display:none; box-shadow:0 0 15px #00ff99; z-index:999;">
-  <h3>مساعد CodeVerse</h3>
-  <p id="assistantResponse">اضغط على زر لتلقي نصيحة برمجية!</p>
-  <button onclick="giveTip()" style="margin-top:10px; background:#00ff99; color:#0f0f0f; padding:8px; border:none; border-radius:5px; font-weight:bold;">💡 نصيحة</button>
-</div>
-<script>function toggleAssistant() {
-  const panel = document.getElementById("assistantPanel");
-  panel.style.display = panel.style.display === "none" ? "block" : "none";
+if (!root) {
+  throw new Error("Root element not found");
 }
 
-function giveTip() {
-  const tips = [
-    "استخدم التعليقات داخل الكود لتوضيح المنطق.",
-    "قسّم مشروعك إلى ملفات صغيرة ليسهل التعديل.",
-    "استخدم أسماء متغيرات واضحة ومفهومة.",
-    "جرّب استخدام Flexbox لتنسيق العناصر بسهولة.",
-    "احرص على تجربة الكود في أكثر من متصفح."
-  ];
-  const randomTip = tips[Math.floor(Math.random() * tips.length)];
-  document.getElementById("assistantResponse").innerText = randomTip;
-}</script>
-  <script>function unlockAchievement(title, emoji) {
-  const container = document.getElementById("achievements");
-  const badge = document.createElement("div");
-  badge.innerHTML = `${emoji} <strong>${title}</strong>`;
-  badge.style.padding = "10px";
-  badge.style.background = "#00ff99";
-  badge.style.color = "#0f0f0f";
-  badge.style.borderRadius = "8px";
-  badge.style.boxShadow = "0 0 10px #00ff99";
-  badge.style.fontWeight = "bold";
-  badge.style.marginBottom = "10px";
-  container.appendChild(badge);
+createRoot(root).render(<App />);
+import { useState } from "react";
 
-  // حفظ الإنجاز في localStorage
-  let saved = JSON.parse(localStorage.getItem("codeverseAchievements")) || [];
-  if (!saved.includes(title)) {
-    saved.push(title);
-    localStorage.setItem("codeverseAchievements", JSON.stringify(saved));
-  }
+export default function App() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Email: ${email}\nPassword: ${password}`);
+  };
+
+  return (
+    <div className="app">
+      <form className="login-box" onSubmit={handleLogin}>
+        <h2>Code Translations</h2>
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+}
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-// ✅ استرجاع الإنجازات عند تحميل الصفحة
-window.addEventListener("load", () => {
-  const saved = JSON.parse(localStorage.getItem("codeverseAchievements")) || [];
-  saved.forEach(title => {
-    unlockAchievement(title, "✅");
-  });
-});</script>
-<body><footer style="background:#0f0f0f; color:#00ff99; text-align:center; padding:20px; border-top:2px solid #00ff99; box-shadow:0 -2px 10px #00ff99;">
-  <p style="margin:0; font-weight:bold;">🚀 تم بناء CodeVerse بحب وإبداع بواسطة iouh</p>
-  <p style="margin:5px 0;">© 2025 جميع الحقوق محفوظة</p>
-  <div style="margin-top:10px;">
-    <a href="#" style="color:#00ff99; margin:0 10px; text-decoration:none;">💬 Discord</a>
-    <a href="#" style="color:#00ff99; margin:0 10px; text-decoration:none;">🐦 Twitter</a>
-    <a href="#" style="color:#00ff99; margin:0 10px; text-decoration:none;">📺 YouTube</a>
-  </div>
-<body><div id="matrixNumbers" style="position:fixed; bottom:0; left:0; width:100%; height:40px; background:#0f0f0f; color:#00ff99; font-family:monospace; font-size:18px; white-space:nowrap; overflow:hidden; padding:5px 10px; box-shadow:0 -2px 10px #00ff99; z-index:9999;"></div>
-</body>
-<script>function generateMatrixNumbers() {
-  const container = document.getElementById("matrixNumbers");
-  let digits = "";
-  for (let i = 0; i < 100; i++) {
-    digits += Math.floor(Math.random() * 10);
-  }
-  container.innerText = digits;
+body {
+  margin: 0;
+  background: #0f172a;
+  color: white;
 }
 
-// تحديث الأرقام كل 150ms لسرعة عالية
-setInterval(generateMatrixNumbers, 150);</script>
+.app {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  background: #020617;
+  padding: 30px;
+  border-radius: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-box h2 {
+  text-align: center;
+}
+
+.login-box input {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.login-box button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+  font-weight: bold;
+}
+
+.login-box button:hover {
+  background: #1d4ed8;
+}
